@@ -20,13 +20,7 @@ The system consists of four main components:
 
 ## Setup Instructions
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/sammyrengs/fleet-tracking-system-basic.git
-cd fleet-tracking-system-basic
-```
-
-### 2. Kafka Setup
+### Kafka Setup
 Make sure you have Apache Kafka installed and running locally. If using Docker:
 
 ```bash
@@ -41,56 +35,29 @@ docker run -d --name kafka -p 9092:9092 \
     wurstmeister/kafka
 ```
 
-### 3. Install Dependencies
+### Install Dependencies
 
 Install dependencies for each component:
 
 ```bash
-# Producer
-cd producer
-npm install
-
-# Consumer
-cd ../consumer
-npm install
-
 # Frontend
 cd ../fleet-tracking-frontend
 npm install
 ```
 
-### 4. Configuration
-Create `.env` files in each component directory if needed:
-
-Producer `.env`:
-```
-KAFKA_BROKER=localhost:9092
-KAFKA_TOPIC=vehicle_location
-```
-
-Consumer `.env`:
-```
-KAFKA_BROKER=localhost:9092
-KAFKA_TOPIC=vehicle_location
-```
-
-Frontend `.env`:
-```
-REACT_APP_API_URL=http://localhost:3001
-```
-
-### 5. Start the Services
+### Start the Services
 
 Start each component in separate terminal windows:
 
 ```bash
-# Start Producer
 cd producer
-npm start
+mvn clean package
+java -jar target/fleet-tracking-producer-1.0.0.jar
 
-# Start Consumer
-cd consumer
-npm start
+# Build and Run Consumer
+cd ../consumer
+mvn clean package
+java -jar target/fleet-tracking-consumer-1.0.0.jar
 
 # Start Frontend
 cd fleet-tracking-frontend
@@ -105,9 +72,6 @@ The frontend application will be available at `http://localhost:3000`
 - Interactive map interface
 - Vehicle status monitoring
 - Historical route visualization
-- Multiple vehicle tracking support
-
-## Project Structure
 
 ```
 fleet-tracking-system-basic/
